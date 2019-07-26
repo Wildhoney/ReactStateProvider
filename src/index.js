@@ -39,7 +39,7 @@ export function createStore(name, duck) {
             : duck.actions;
     };
 
-    stores.set(name, { StockProvider, useStore, useActions });
+    stores.set(name, { StoreProvider, useStore, useActions });
 
     return { StoreProvider, useStore, useActions };
 }

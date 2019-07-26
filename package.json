@@ -8,9 +8,24 @@
   "author": "Adam Timberlake <adam.timberlake@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "format": "NODE_ENV=production prettier --write '**/**.{js,html}'"
+    "format": "NODE_ENV=production prettier --write '**/**.{js,html}'",
+    "lint": "eslint '**/**.js'"
+  },
+  "dependencies": {
+    "babel-eslint": "^10.0.2",
+    "eslint": "^6.0.1",
+    "eslint-config-prettier": "^6.0.0",
+    "eslint-config-standard": "^13.0.1",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-node": "^9.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-react": "^7.14.2",
+    "eslint-plugin-standard": "^4.0.0"
   },
   "devDependencies": {
+    "@babel/plugin-transform-runtime": "^7.5.5",
+    "@babel/preset-env": "^7.5.5",
+    "@babel/preset-react": "^7.0.0",
     "prettier": "^1.18.2",
     "prop-types": "^15.7.2",
     "react": "^16.8.6"
