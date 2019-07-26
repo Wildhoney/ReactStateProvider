@@ -10,6 +10,7 @@
   "scripts": {
     "build": "rollup -c",
     "format": "NODE_ENV=production prettier --write '**/**.{js,html}'",
+    "test": "yarn lint",
     "lint": "eslint '**/**.js'"
   },
   "devDependencies": {
