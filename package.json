@@ -2,11 +2,16 @@
   "name": "react-store-provider",
   "version": "0.1.0",
   "description": "Another way to manage global state in any given component tree using providers and hooks. ",
-  "main": "src/index.js",
+  "main": "dist/react-store-provider.cjs.js",
+  "module": "dist/react-store-provider.esm.js",
   "repository": "git@github.com:Wildhoney/ReactStateProvider.git",
   "author": "Adam Timberlake <adam.timberlake@gmail.com>",
   "license": "MIT",
+  "scripts": {
+    "format": "NODE_ENV=production prettier --write '**/**.{js,html}'"
+  },
   "devDependencies": {
+    "prettier": "^1.18.2",
     "prop-types": "^15.7.2",
     "react": "^16.8.6"
   }

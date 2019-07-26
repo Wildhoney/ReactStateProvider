@@ -1,47 +1,50 @@
-import { createContext, useContext, useReducer } from "react";
-import PropTypes from "prop-types";
+import { createContext, useContext, useReducer } from 'react';
+import PropTypes from 'prop-types';
 
 const stores = new Map();
 
 export function createStore(name, duck) {
+    if (stores.has(name)) return stores.get(name);
 
-if (stores.has(name)) return stores.get(name)
+    const DataContext = createContext(duck.initialState);
 
-  const DataContext = createContext(duck.initialState);
+    function StoreProvider({ value, children }) {
+        const reducer = useReducer(duck.reducer, value);
 
-  function StoreProvider({ value, children }) {
-    const reducer = useReducer(duck.reducer, value);
+        return (
+            <DataContext.Provider value={reducer}>
+                {children}
+            </DataContext.Provider>
+        );
+    }
 
-    return (
-      <DataContext.Provider value={reducer}>{children}</DataContext.Provider>
-    );
-  }
+    StoreProvider.propTypes = {
+        value: PropTypes.any,
+        children: PropTypes.node.isRequired,
+    };
 
-  StoreProvider.propTypes = {
-    value: PropTypes.any,
-    children: PropTypes.node.isRequired
-  };
+    StoreProvider.defaultProps = {
+        value: duck.initialState,
+    };
 
-  StoreProvider.defaultProps = {
-    value: duck.initialState
-  };
+    const useStore = () => {
+        const [state] = useContext(DataContext);
+        return state;
+    };
 
-  const useStore = () => {
-    const [state] = useContext(DataContext);
-    return state;
-  };
+    const useActions = () => {
+        const [, dispatch] = useContext(DataContext);
+        return typeof duck.actions === 'function'
+            ? duck.actions(dispatch)
+            : duck.actions;
+    };
 
-  const useActions = () => {
-    const [, dispatch] = useContext(DataContext);
-    return duck.bindActions(dispatch);
-  };
+    stores.set(name, { StockProvider, useStore, useActions });
 
-  stores.set(name, { StockProvider, useStore, useActions });
-
-  return { StoreProvider, useStore, useActions };
+    return { StoreProvider, useStore, useActions };
 }
 
-export function getStore(name ) {
-  const store = stores.get(name);
-  return { useStore: store.useStore, useActions: store.useActions };
+export function getStore(name) {
+    const store = stores.get(name);
+    return { useStore: store.useStore, useActions: store.useActions };
 }
