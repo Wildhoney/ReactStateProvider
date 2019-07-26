@@ -1,6 +1,6 @@
 {
   "name": "react-store-provider",
-  "version": "0..10",
+  "version": "0.1.0",
   "description": "Another way to manage global state in any given component tree using providers and hooks. ",
   "main": "src/index.js",
   "repository": "git@github.com:Wildhoney/ReactStateProvider.git",
