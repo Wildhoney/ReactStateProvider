@@ -2,32 +2,38 @@
   "name": "react-store-provider",
   "version": "0.1.0",
   "description": "Another way to manage global state in any given component tree using providers and hooks. ",
-  "main": "dist/react-store-provider.cjs.js",
-  "module": "dist/react-store-provider.esm.js",
+  "main": "dist/rsp.cjs.js",
+  "module": "dist/rsp.esm.js",
   "repository": "git@github.com:Wildhoney/ReactStateProvider.git",
   "author": "Adam Timberlake <adam.timberlake@gmail.com>",
   "license": "MIT",
   "scripts": {
+    "build": "rollup -c",
     "format": "NODE_ENV=production prettier --write '**/**.{js,html}'",
     "lint": "eslint '**/**.js'"
   },
-  "dependencies": {
+  "devDependencies": {
+    "@babel/core": "^7.5.5",
+    "@babel/plugin-transform-runtime": "^7.5.5",
+    "@babel/preset-env": "^7.5.5",
+    "@babel/preset-react": "^7.0.0",
     "babel-eslint": "^10.0.2",
-    "eslint": "^6.0.1",
+    "eslint": "^6.1.0",
     "eslint-config-prettier": "^6.0.0",
     "eslint-config-standard": "^13.0.1",
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-node": "^9.1.0",
     "eslint-plugin-promise": "^4.2.1",
-    "eslint-plugin-react": "^7.14.2",
-    "eslint-plugin-standard": "^4.0.0"
-  },
-  "devDependencies": {
-    "@babel/plugin-transform-runtime": "^7.5.5",
-    "@babel/preset-env": "^7.5.5",
-    "@babel/preset-react": "^7.0.0",
+    "eslint-plugin-react": "^7.14.3",
+    "eslint-plugin-standard": "^4.0.0",
     "prettier": "^1.18.2",
     "prop-types": "^15.7.2",
-    "react": "^16.8.6"
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "rollup": "^1.17.0",
+    "rollup-plugin-babel": "^4.3.3",
+    "rollup-plugin-commonjs": "^10.0.1",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-terser": "^5.1.1"
   }
 }
