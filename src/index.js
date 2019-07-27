@@ -42,5 +42,12 @@ Store.defaultProps = {
 };
 
 export function useStore(name, mapper = a => a) {
-    return stores.get(name).useStore(mapper);
+    const store = stores.get(name);
+    if (!store)
+        throw new Error(
+            `Unable to find a store named ${name} — only: ${[
+                ...stores.keys(),
+            ].join(', ')}\n`,
+        );
+    return store.useStore(mapper);
 }
