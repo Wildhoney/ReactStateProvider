@@ -29,11 +29,12 @@ export function createStore(name, duck) {
 
     const useStore = () => {
         const [state, dispatch] = useContext(DataContext);
-        const actions = typeof duck.actions === 'function'
-            ? duck.actions(dispatch)
-            : duck.actions;
+        const dispatcher =
+            typeof duck.actions === 'function'
+                ? duck.actions(dispatch)
+                : dispatch;
 
-        return [state, actions];
+        return [state, dispatcher];
     };
 
     stores.set(name, useStore);

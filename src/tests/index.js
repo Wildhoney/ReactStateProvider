@@ -2,7 +2,7 @@ import React from 'react';
 import test from 'ava';
 import { mount } from 'enzyme';
 import * as duck from './duck';
-import {createStore, useStore} from '../';
+import { createStore, useStore } from '../';
 
 function Provider(args) {
     const StoreProvider = createStore('person', duck);
