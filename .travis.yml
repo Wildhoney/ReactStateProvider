@@ -1,0 +1,21 @@
+language: node_js
+node_js: stable
+script:
+    - yarn
+    - yarn test
+    - yarn build
+
+after_success: yarn coverage
+
+before_install:
+    - 'sysctl kernel.unprivileged_userns_clone=1'
+    - 'export DISPLAY=:99.0'
+    - 'sh -e /etc/init.d/xvfb start'
+
+deploy:
+    provider: heroku
+    api_key:
+        secure: wqVnmkhoneAizaxoyzon6ZGop+s+kxEKrdbnpv2mHWV6o5/1L0jkzARI9bF13I32WO9IYgRH83z6OCgMTbnj/Te8MOhXRCD8IsxgPOXejxfDL7fERHYze34M9EZb/yW4PYxY4zs5tSR213tnSAIaVhGW9dDcdlOJypBaq9Mm7f4x779tPTTx4Gckok3zNfaUm6koKYcGu3hz85xHDWT7n70x7LqAG1wOmrliBaQPhdYYxNmizomKWr0XsUFCFhXbnGCM9UftSz1ofwqp0209MUWhu1s1cKmhIT5N5HP9yfBL9xSqrKfOMKp0uXi/waW7V3W9n4WmrXhNuJkkqtfnvI0+fdeclf3J2ZJtiNR3DWYhhCYbITfZQN9SRRN1psVYVAJsVdWcFXBJTPq89kza52nMraO33itIuYV+bVoEQYgwF6p26K9IX98NNPQslz8EhBtVtMMoLwBFHNnt4+1YgpNeCxTYMJHmYYKcsnsgP7F06SulCYHYTgkmVz6cV06RRiF40odNCU0x1x2T41pov4BVBfk0KaYJ9dBV6pbY80/kXdsFn3YVbdkzSyC39M/rzI2wrNVSfz8puriIVIKlAqIdFx05Apr/a0B/yskS+j8ibYwo+zSDzZ3rAAqHgGIniGcfCbZd+zMeX1Eq3QUjOPaBY/RR8Bf1sig0F1DRBBU=
+    app: react-store-provider
+    on:
+        repo: Wildhoney/ReactStoreProvider
