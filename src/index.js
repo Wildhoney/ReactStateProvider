@@ -27,20 +27,20 @@ export function createStore(name, duck) {
         value: duck.initialState,
     };
 
-    const useStore = () => {
+    const useStore = mapper => {
         const [state, dispatch] = useContext(DataContext);
         const dispatcher =
             typeof duck.actions === 'function'
                 ? duck.actions(dispatch)
                 : dispatch;
 
-        return [state, dispatcher];
+        return [mapper(state), dispatcher];
     };
 
     stores.set(name, { useStore, StoreProvider });
     return StoreProvider;
 }
 
-export function useStore(name) {
-    return stores.get(name).useStore();
+export function useStore(name, mapper = a => a) {
+    return stores.get(name).useStore(mapper);
 }
