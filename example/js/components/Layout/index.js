@@ -1,10 +1,12 @@
-import React from "react"
-import {createStore} from 'react-store-provider'
-import * as duckStore from '../../stores/dice'
+import React from 'react';
+import { Store } from 'react-store-provider';
+import * as duckStore from '../../stores/dice';
 import Dice from '../Dice';
 
 export default function Layout() {
-    const StoreProvider = createStore('dice', duckStore);
-
-    return <StoreProvider><Dice /></StoreProvider>
+    return (
+        <Store name="dice" store={duckStore}>
+            <Dice />
+        </Store>
+    );
 }

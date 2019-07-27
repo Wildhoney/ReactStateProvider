@@ -1,3 +1,5 @@
+export const name = Symbol('duck');
+
 export const initialState = {
     name: 'Adam',
 };

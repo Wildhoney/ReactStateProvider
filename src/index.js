@@ -1,45 +1,45 @@
-import React, { createContext, useContext, useReducer } from 'react';
+import React, { createContext, useContext } from 'react';
 import PropTypes from 'prop-types';
+import * as utils from './utils';
 
 const stores = new Map();
 
-export function createStore(name, duck) {
-    if (stores.has(name)) return stores.get(name).StoreProvider;
-
-    const DataContext = createContext(duck.initialState);
-
-    function StoreProvider({ value, children }) {
-        const reducer = useReducer(duck.reducer, value);
-
-        return (
-            <DataContext.Provider value={reducer}>
-                {children}
-            </DataContext.Provider>
-        );
+export function Store({ name, store, ...props }) {
+    if (stores.has(name)) {
+        const { StoreProvider } = stores.get(name);
+        return <StoreProvider {...props} />;
     }
 
-    StoreProvider.propTypes = {
-        value: PropTypes.any,
-        children: PropTypes.node.isRequired,
-    };
-
-    StoreProvider.defaultProps = {
-        value: duck.initialState,
-    };
+    const DataContext = createContext(store.initialState);
+    const StoreProvider = utils.createStoreProvider(store, DataContext);
 
     const useStore = mapper => {
         const [state, dispatch] = useContext(DataContext);
         const dispatcher =
-            typeof duck.actions === 'function'
-                ? duck.actions(dispatch)
+            typeof store.actions === 'function'
+                ? store.actions(dispatch)
                 : dispatch;
 
         return [mapper(state), dispatcher];
     };
 
     stores.set(name, { useStore, StoreProvider });
-    return StoreProvider;
+    return <StoreProvider {...props} />;
 }
+
+Store.propTypes = {
+    name: PropTypes.oneOfType([PropTypes.string, PropTypes.symbol]),
+    store: PropTypes.shape({
+        initialState: PropTypes.any.isRequired,
+        actions: PropTypes.oneOfType([PropTypes.object, PropTypes.func])
+            .isRequired,
+        reducer: PropTypes.func.isRequired,
+    }).isRequired,
+};
+
+Store.defaultProps = {
+    name: null,
+};
 
 export function useStore(name, mapper = a => a) {
     return stores.get(name).useStore(mapper);

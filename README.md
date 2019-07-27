@@ -39,19 +39,17 @@ export function reducer(state, action) {
 }
 ```
 
-Once your store is all setup use `createStore` to initialise it and then `getStore` to get a reference to the hook. You must have the `StoreProvider` in your tree before using the `useStore` hook.
+Once your store is all setup use `Store` to initialise it and then `getStore` to get a reference to the hook. You must have the `StoreProvider` in your tree before using the `useStore` hook.
 
 ```javascript
-import { createStore } from 'react-store-provider';
+import { Store } from 'react-store-provider';
 import * as store from './foobar-store';
 
 export default function Parent({ children }) {
-    const StoreProvider = createStore('foobar', store);
-
     return (
-        <StoreProvider>
+        <Store name="foobar" store={store}>
             {children}
-        </StoreProvider>
+        </Store>
     );
 }
 ```
