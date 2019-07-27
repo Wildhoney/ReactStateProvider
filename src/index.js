@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 const stores = new Map();
 
 export function createStore(name, duck) {
-    if (stores.has(name)) return stores.get(name);
+    if (stores.has(name)) return stores.get(name).StoreProvider;
 
     const DataContext = createContext(duck.initialState);
 
@@ -37,10 +37,10 @@ export function createStore(name, duck) {
         return [state, dispatcher];
     };
 
-    stores.set(name, useStore);
+    stores.set(name, { useStore, StoreProvider });
     return StoreProvider;
 }
 
 export function useStore(name) {
-    return stores.get(name)();
+    return stores.get(name).useStore();
 }
