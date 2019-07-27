@@ -1,4 +1,4 @@
-import { createContext, useContext, useReducer } from 'react';
+import React, { createContext, useContext, useReducer } from 'react';
 import PropTypes from 'prop-types';
 
 const stores = new Map();
@@ -28,23 +28,18 @@ export function createStore(name, duck) {
     };
 
     const useStore = () => {
-        const [state] = useContext(DataContext);
-        return state;
-    };
-
-    const useActions = () => {
-        const [, dispatch] = useContext(DataContext);
-        return typeof duck.actions === 'function'
+        const [state, dispatch] = useContext(DataContext);
+        const actions = typeof duck.actions === 'function'
             ? duck.actions(dispatch)
             : duck.actions;
+
+        return [state, actions];
     };
 
-    stores.set(name, { StoreProvider, useStore, useActions });
-
-    return { StoreProvider, useStore, useActions };
+    stores.set(name, useStore);
+    return StoreProvider;
 }
 
-export function getStore(name) {
-    const store = stores.get(name);
-    return { useStore: store.useStore, useActions: store.useActions };
+export function useStore(name) {
+    return stores.get(name)();
 }
